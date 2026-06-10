@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Дневник СТБ — 8 неделя</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Source Sans 3',-apple-system,sans-serif;background:#EEF3F7;color:#1E2D3D;min-height:100vh;padding:0 0 100px 0}
+  .header{background:linear-gradient(135deg,#4A7C9B,#3B6A88);color:#fff;padding:28px 20px 22px;text-align:center;position:sticky;top:0;z-index:10}
+  .header h1{font-size:17px;font-weight:500;letter-spacing:.03em}
+  .header p{font-size:12px;font-weight:300;margin-top:4px;opacity:.8}
+  .container{max-width:480px;margin:0 auto;padding:14px}
+  .entry-block{margin-bottom:20px}
+  .entry-header{display:flex;align-items:center;justify-content:space-between;padding:10px 0;margin-bottom:6px}
+  .entry-label{font-size:15px;font-weight:600;color:#3B6A88}
+  .entry-delete{font-size:12px;color:#B85450;background:none;border:1px solid #B85450;border-radius:6px;padding:4px 10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .section{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .section-num{display:inline-block;width:22px;height:22px;background:#4A7C9B;color:#fff;border-radius:50%;text-align:center;line-height:22px;font-size:12px;font-weight:600;margin-right:6px;vertical-align:middle}
+  .section-title{font-size:14px;font-weight:600;color:#2C4A5E;display:inline;vertical-align:middle}
+  .section-head{margin-bottom:8px}
+  .hint{font-size:12px;color:#6B8EA6;line-height:1.5;margin-bottom:8px;padding:8px 10px;background:#F0F6FA;border-radius:8px;border-left:3px solid #A3C4D9}
+  .type-group{display:flex;gap:6px}
+  .type-btn{flex:1;padding:10px 4px;border:1.5px solid #C3D8E6;border-radius:10px;background:#fff;text-align:center;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+  .type-btn.active{border-color:#4A7C9B;background:#4A7C9B;color:#fff}
+  .type-btn .label{font-size:15px;font-weight:600;display:block}
+  .type-btn .sub{font-size:10px;opacity:.7;display:block;margin-top:2px}
+  textarea{width:100%;border:1.5px solid #D6E3EC;border-radius:8px;padding:10px 12px;font-family:inherit;font-size:14px;color:#1E2D3D;background:#FAFCFD;resize:none;outline:none;transition:border-color .2s;line-height:1.5}
+  textarea:focus{border-color:#4A7C9B}
+  textarea::placeholder{color:#B0C7D6}
+  .slider-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .slider-row:last-child{margin-bottom:0}
+  .slider-label{font-size:13px;color:#3B6A88;min-width:80px;font-weight:500}
+  .slider-wrap{flex:1}
+  input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;background:#D6E3EC;outline:none}
+  input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;background:#4A7C9B;cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+  .slider-val{font-size:16px;font-weight:600;color:#3B6A88;min-width:28px;text-align:center}
+  .date-row{display:flex;gap:8px}
+  .date-input,.time-input{flex:1;border:1.5px solid #D6E3EC;border-radius:8px;padding:10px 12px;font-family:inherit;font-size:14px;color:#1E2D3D;background:#FAFCFD;outline:none}
+  .date-input:focus,.time-input:focus{border-color:#4A7C9B}
+  .copy-section{padding:16px 0}
+  .copy-btn{display:block;width:100%;padding:16px;background:#4A7C9B;color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:16px;font-weight:500;cursor:pointer;transition:all .2s}
+  .copy-btn:active{transform:scale(.98);background:#3B6A88}
+  .copy-btn.copied{background:#4A8C6A}
+  .clear-btn{display:block;width:100%;padding:12px;background:transparent;color:#93B1C4;border:1.5px solid #C3D8E6;border-radius:12px;font-family:inherit;font-size:14px;cursor:pointer;margin-top:8px}
+  .add-btn{display:block;width:100%;padding:14px;background:#fff;color:#4A7C9B;border:2px dashed #A3C4D9;border-radius:12px;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;margin-top:6px;transition:all .2s;-webkit-tap-highlight-color:transparent}
+  .add-btn:active{background:#F0F6FA}
+  .divider{height:2px;background:linear-gradient(90deg,transparent,#C3D8E6,transparent);margin:6px 0}
+  .sub-label{font-size:13px;font-weight:500;color:#3B6A88;margin:10px 0 4px}
+  .entry-separator{height:3px;background:linear-gradient(90deg,transparent,#4A7C9B,transparent);margin:16px 0 12px;opacity:.4}
+  /* Catastrophe badge */
+  .cat-badge{display:inline-block;background:#F5EEF8;color:#7D5A8A;border-radius:8px;font-size:12px;font-weight:600;padding:2px 9px;margin-left:6px;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>ДНЕВНИК СТРАХА, ТРЕВОГИ И БЕСПОКОЙСТВА</h1>
+  <p>8-я неделя программы</p>
+</div>
+
+<div class="container" id="app">
+  <div id="entries"></div>
+
+  <button class="add-btn" onclick="addEntry()">+ Добавить ещё запись</button>
+
+  <div class="divider" style="margin-top:16px"></div>
+
+  <div class="copy-section">
+    <button class="copy-btn" id="copyBtn" onclick="copyAll()">СКОПИРОВАТЬ ВСЁ В ДНЕВНИК</button>
+    <button class="clear-btn" onclick="clearAll()">Очистить всё</button>
+  </div>
+</div>
+
+<script>
+let entryCount = 0;
+
+function uid() { return 'e' + (++entryCount); }
+
+function now() {
+  const d = new Date();
+  return {
+    date: d.toISOString().split('T')[0],
+    time: `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`
+  };
+}
+
+function entryHTML(id, n) {
+  const t = now();
+  return `
+  <div class="entry-block" id="${id}">
+    ${n > 1 ? '<div class="entry-separator"></div>' : ''}
+    <div class="entry-header">
+      <span class="entry-label">Запись ${n}</span>
+      ${n > 1 ? `<button class="entry-delete" onclick="removeEntry('${id}')">Удалить</button>` : ''}
+    </div>
+
+    <div class="section">
+      <div class="section-head"><span class="section-num">1</span><span class="section-title">Дата и время</span></div>
+      <div class="date-row">
+        <input type="date" class="date-input" data-f="date" value="${t.date}">
+        <input type="time" class="time-input" data-f="time" value="${t.time}">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><span class="section-num">2</span><span class="section-title">Что это было</span></div>
+      <div class="hint">С — страх: угроза прямо сейчас, секунды-минуты.<br>Т — тревога: возможная опасность в будущем.<br>Б — беспокойство: прокручивание сценариев, навязчивые мысли.</div>
+      <div class="type-group">
+        <div class="type-btn" onclick="selType(this,'С')"><span class="label">С</span><span class="sub">страх</span></div>
+        <div class="type-btn" onclick="selType(this,'Т')"><span class="label">Т</span><span class="sub">тревога</span></div>
+        <div class="type-btn" onclick="selType(this,'Б')"><span class="label">Б</span><span class="sub">беспокойство</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><span class="section-num">3</span><span class="section-title">Ситуация</span></div>
+      <div class="hint">Коротко: где были, что происходило, кто участвовал? Что стало пусковым моментом?</div>
+      <textarea data-f="situation" rows="3" placeholder="Что произошло..."></textarea>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><span class="section-num">4</span><span class="section-title">Стимулы</span></div>
+      <div class="hint">Что именно в произошедшем кажется вам опасным или угрожающим? Конкретно — что пугает в этой ситуации?</div>
+      <textarea data-f="stimuli" rows="3" placeholder="Что кажется опасным или угрожающим..."></textarea>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><span class="section-num">5</span><span class="section-title">Первичная оценка</span></div>
+      <div class="hint">Что вы подумали о происходящем ДО того, как появилась реакция? Быстрая автоматическая мысль за доли секунды. Например: «это опасно», «сейчас случится плохое», «я не справлюсь».</div>
+      <textarea data-f="primary" rows="3" placeholder="Что подумали до реакции..."></textarea>
+      <div class="sub-label">Насколько верили в эту мысль в тот момент?</div>
+      <div class="slider-row">
+        <span class="slider-label">Вера</span>
+        <div class="slider-wrap"><input type="range" min="0" max="100" value="50" step="5" data-f="belief" oninput="this.parentElement.nextElementSibling.textContent=this.value+'%'"></div>
+        <span class="slider-val">50%</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><span class="section-num">6</span><span class="section-title">Вторичная оценка</span></div>
+      <div class="hint">Что вы подумали о своей способности справиться или противостоять угрозе? Например: «я не выдержу», «у меня не хватит сил», «я справлюсь, если...».</div>
+      <textarea data-f="secondary" rows="3" placeholder="Мысли о способности справиться..."></textarea>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <span class="section-num">7</span><span class="section-title">Катастрофизация</span>
+        <span class="cat-badge">ключевой шаг</span>
+      </div>
+      <div class="hint">К каким ужасным последствиям может привести эта ситуация? Опишите самый страшный сценарий, который рисует ваш ум.</div>
+      <textarea data-f="catastrophe" rows="3" placeholder="Самый страшный сценарий..."></textarea>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><span class="section-num">8</span><span class="section-title">Оспаривание катастрофы</span></div>
+      <div class="hint">Насколько вероятны эти ужасные последствия на самом деле? Что говорят факты? Бывало ли такое раньше? Как вы справлялись? Какой реалистичный исход более вероятен?</div>
+      <textarea data-f="challenge" rows="3" placeholder="Факты против катастрофы..."></textarea>
+      <div class="sub-label">Вероятность катастрофического исхода</div>
+      <div class="slider-row">
+        <span class="slider-label">Вероятность</span>
+        <div class="slider-wrap"><input type="range" min="0" max="100" value="50" step="5" data-f="probability" oninput="this.parentElement.nextElementSibling.textContent=this.value+'%'"></div>
+        <span class="slider-val">50%</span>
+      </div>
+      <div class="sub-label">Вера в мысль после оспаривания</div>
+      <div class="slider-row">
+        <span class="slider-label">Вера сейчас</span>
+        <div class="slider-wrap"><input type="range" min="0" max="100" value="50" step="5" data-f="beliefAfter" oninput="this.parentElement.nextElementSibling.textContent=this.value+'%'"></div>
+        <span class="slider-val">50%</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><span class="section-num">9</span><span class="section-title">Заметка</span></div>
+      <textarea data-f="note" rows="2" placeholder="Наблюдения, выводы, вопросы..."></textarea>
+    </div>
+
+    <div class="copy-section" style="padding:8px 0">
+      <button class="copy-btn" onclick="copyEntry('${id}')">СКОПИРОВАТЬ ЭТУ ЗАПИСЬ</button>
+    </div>
+  </div>`;
+}
+
+function addEntry() {
+  const id = uid();
+  const container = document.getElementById('entries');
+  const n = container.querySelectorAll('.entry-block').length + 1;
+  container.insertAdjacentHTML('beforeend', entryHTML(id, n));
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function removeEntry(id) {
+  if (!confirm('Удалить эту запись?')) return;
+  document.getElementById(id).remove();
+  renumber();
+}
+
+function renumber() {
+  document.querySelectorAll('.entry-block').forEach((el, i) => {
+    el.querySelector('.entry-label').textContent = `Запись ${i + 1}`;
+  });
+}
+
+function selType(el, type) {
+  const group = el.parentElement;
+  group.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  el.dataset.selected = type;
+}
+
+function formatDate(d, t) {
+  if (!d) return '-';
+  const dt = new Date(d);
+  const m = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  let r = `${dt.getDate()} ${m[dt.getMonth()]} ${dt.getFullYear()}`;
+  if (t) r += `, ${t}`;
+  return r;
+}
+
+function readEntry(block) {
+  const g = (f) => { const el = block.querySelector(`[data-f="${f}"]`); return el ? (el.value || '').trim() : ''; };
+  const gv = (f) => { const el = block.querySelector(`[data-f="${f}"]`); return el ? el.value : '50'; };
+  const typeBtn = block.querySelector('.type-btn.active');
+  const type = typeBtn ? typeBtn.dataset.selected || typeBtn.querySelector('.label').textContent : '-';
+  const typeFull = type === 'С' ? 'Страх' : type === 'Т' ? 'Тревога' : type === 'Б' ? 'Беспокойство' : '-';
+
+  let t = '';
+  t += `${formatDate(g('date'), g('time'))}\n`;
+  t += `${typeFull} (${type})\n\n`;
+  t += `1. Ситуация\n${g('situation') || '-'}\n\n`;
+  t += `2. Стимулы (что кажется опасным)\n${g('stimuli') || '-'}\n\n`;
+  t += `3. Первичная оценка (до реакции)\n${g('primary') || '-'}\n`;
+  t += `   Вера в мысль: ${gv('belief')}%\n\n`;
+  t += `4. Вторичная оценка (способность справиться)\n${g('secondary') || '-'}\n\n`;
+  t += `5. Катастрофизация\n${g('catastrophe') || '-'}\n\n`;
+  t += `6. Оспаривание катастрофы\n${g('challenge') || '-'}\n`;
+  t += `   Вероятность катастрофы: ${gv('probability')}%\n`;
+  t += `   Вера после оспаривания: ${gv('beliefAfter')}%\n`;
+  const note = g('note');
+  if (note) t += `\n7. Заметка: ${note}\n`;
+  t += `\n---\n`;
+  return t;
+}
+
+function copyEntry(id) {
+  const block = document.getElementById(id);
+  const text = readEntry(block);
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = block.querySelector('.copy-btn');
+    btn.textContent = 'СКОПИРОВАНО';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'СКОПИРОВАТЬ ЭТУ ЗАПИСЬ'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+
+function copyAll() {
+  const blocks = document.querySelectorAll('.entry-block');
+  let all = '';
+  blocks.forEach(b => { all += readEntry(b) + '\n'; });
+  navigator.clipboard.writeText(all).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'СКОПИРОВАНО';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'СКОПИРОВАТЬ ВСЁ В ДНЕВНИК'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+
+function clearAll() {
+  if (!confirm('Очистить все записи?')) return;
+  document.getElementById('entries').innerHTML = '';
+  entryCount = 0;
+  addEntry();
+}
+
+addEntry();
+</script>
+
+</body>
+</html>
